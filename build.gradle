@@ -2,7 +2,7 @@ plugins {
     id "com.jfrog.bintray" version "1.6"
 }
 
-group 'io.github.notsyncing.qcloudim'
+group 'io.github.oneyx.qcloudim'
 version '0.1.0'
 
 apply plugin: 'java'
@@ -15,6 +15,8 @@ repositories {
     mavenCentral()
 }
 
+def var = version
+
 dependencies {
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.39'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
@@ -22,6 +24,10 @@ dependencies {
     compile group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: '1.58'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }
 
 javadoc {
@@ -41,9 +47,9 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId 'io.github.notsyncing.qcloudim'
+            groupId 'io.github.oneyx.qcloudim'
             artifactId 'qcloudim-sdk'
-            version version
+            version var
             from components.java
 
             artifact sourceJar
@@ -60,11 +66,11 @@ bintray {
         repo = 'maven'
         name = 'qcloudim-sdk'
         licenses = [ 'GPL-3.0' ]
-        vcsUrl = 'https://github.com/notsyncing/qcloudim.git'
+        vcsUrl = 'https://github.com/OneYX/qcloudim-sdk.git'
 
         version {
-            name = version
-            vcsTag = version
+            name =  var
+            vcsTag = var
         }
     }
 
